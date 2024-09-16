@@ -1,0 +1,56 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:context="http://www.springframework.org/schema/context"
+  xmlns:tx="http://www.springframework.org/schema/tx"
+  xsi:schemaLocation="
+        http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/tx
+        http://www.springframework.org/schema/tx/spring-tx.xsd">
+
+  <!-- Enable component scanning -->
+  <context:component-scan base-package="nl.joost.xmluploader" />
+
+  <!-- XML Validator Bean -->
+  <bean id="xmlValidator" class="nl.joost.xmluploader.validator.XmlValidator"/>
+
+  <!-- DataSource (JDBC configuration) -->
+  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
+    <property name="url" value="jdbc:mysql://localhost:3306/XmlUploader"/>
+    <property name="username" value="root"/>
+    <property name="password" value="password"/>
+  </bean>
+
+  <!-- Transaction Manager -->
+  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+    <property name="dataSource" ref="dataSource"/>
+  </bean>
+
+  <!-- Hibernate JPA Configuration -->
+  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
+    <property name="dataSource" ref="dataSource"/>
+    <property name="packagesToScan" value="nl.joost.xmluploader.model"/>
+    <property name="jpaVendorAdapter">
+      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
+        <property name="generateDdl" value="true"/>
+      </bean>
+    </property>
+  </bean>
+
+
+  <!-- Enable annotation-driven transactions -->
+  <tx:annotation-driven />
+
+  <!-- Optional: Other beans for service/repo if not using annotations -->
+  <!-- Example of service bean -->
+  <!--
+  <bean id="exampleService" class="nl.joost.xmluploader.service.ExampleService">
+      <property name="dependency" ref="someOtherBean"/>
+  </bean>
+  -->
+</beans>
+
+
