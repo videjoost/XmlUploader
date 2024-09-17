@@ -1,3 +1,34 @@
 spring:
   application:
     name: "XmlUploader"
+
+server:
+
+  port: 9080
+
+management:
+  server:
+    port: 9081
+  endpoints:
+    web:
+      exposure:
+        include: "*"  # Expose all endpoints
+  health:
+    livenessState:
+      enabled: true
+    readinessState:
+      enabled: true
+    diskSpace:
+      enable: true
+  endpoint:
+    health:
+      enabled: true
+      show-details: "always"
+
+logging:
+        level:
+          root: INFO
+          nl.joost.xmluploader: DEBUG
+        file:
+          name: "/tmp/logs/xml_uploader.log"
+

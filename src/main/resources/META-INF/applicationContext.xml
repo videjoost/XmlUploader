@@ -41,16 +41,9 @@
   </bean>
 
 
-  <!-- Enable annotation-driven transactions -->
+
   <tx:annotation-driven />
 
-  <!-- Optional: Other beans for service/repo if not using annotations -->
-  <!-- Example of service bean -->
-  <!--
-  <bean id="exampleService" class="nl.joost.xmluploader.service.ExampleService">
-      <property name="dependency" ref="someOtherBean"/>
-  </bean>
-  -->
 </beans>
 
 

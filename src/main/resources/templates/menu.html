@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Signup</title>
+  <title>Menu</title>
   <style>
     body {
       font-family: Liberation Mono, serif;
@@ -16,14 +16,14 @@
       padding-top: 30px;
     }
 
-    .signup-container {
+    .menu-container {
       text-align: center;
       padding: 50px;
       border-radius: 10px;
       display: flex;
       justify-content: center;
       flex-direction: column;
-      align-items: center; /* This centers all content */
+      align-items: center;
       width: 100%;
       max-width: 350px;
     }
@@ -46,24 +46,43 @@
       margin: 10px 0;
     }
 
-    .input-box input,
-    .signup-button {
+    .menu-button {
       width: 100%; /* Full width for inputs and buttons */
       max-width: 350px; /* Constrain the width */
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid black;
+      padding: 15px;
+      font-size: 1.2rem;
       border-radius: 5px;
+      border: 2px solid black;
       box-shadow: 3px 3px 0px #000;
+      margin-bottom: 10px;
       text-align: center;
+      cursor: pointer;
     }
 
-    .signup-button {
-      background-color: #ff69b4;
+    .menu-button.upload {
+      background-color: #ffd700; /* Yellow color for Upload XML */
+      color: black;
+    }
+
+    .menu-button.upload:hover {
+      background-color: #e5c300;
+    }
+
+    .menu-button.see-books {
+      background-color: #00c1b6; /* Teal color for See Books */
       color: white;
     }
 
-    .signup-button:hover {
+    .menu-button.see-books:hover {
+      background-color: #009f97;
+    }
+
+    .menu-button.logout {
+      background-color: #ff69b4; /* Pink color for Log Out */
+      color: white;
+    }
+
+    .menu-button.logout:hover {
       background-color: #ff1493;
     }
 
@@ -71,24 +90,24 @@
 </head>
 <body>
 
-<div class="signup-container">
-  <h1>SIGNUP</h1>
+<div class="menu-container">
+  <h1>MENU</h1>
   <div class="form-container">
-    <form th:action="@{/signup}" th:object="${user}" method="post">
-      <div class="input-box">
-        <input type="text" placeholder="USERNAME" th:field="*{username}" required>
-      </div>
-      <div class="input-box">
-        <input type="email" placeholder="E-MAIL" th:field="*{email}" required>
-      </div>
-      <div class="input-box">
-        <input type="password" placeholder="PASSWORD" th:field="*{password}" required>
-      </div>
-      <div class="input-box">
-        <input type="password" placeholder="VERIFY PASSWORD" th:field="*{verifyPassword}" required>
-      </div>
+    <form th:action="@{/upload-xml}" method="get">
       <div class="button-box">
-        <button class="signup-button" type="submit">SIGNUP</button>
+        <button class="menu-button upload" type="submit">UPLOAD XML</button>
+      </div>
+    </form>
+
+    <form th:action="@{/see-books}" method="get">
+      <div class="button-box">
+        <button class="menu-button see-books" type="submit">SEE BOOKS</button>
+      </div>
+    </form>
+
+    <form th:action="@{/logout}" method="post">
+      <div class="button-box">
+        <button class="menu-button logout" type="submit">LOG OUT</button>
       </div>
     </form>
   </div>

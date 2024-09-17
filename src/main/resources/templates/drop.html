@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Drop XML</title>
+  <style>
+    body {
+      font-family: Liberation Mono, serif;
+      background-color: #fffdd0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-top: 30px;
+    }
+
+    .drop-container {
+      text-align: center;
+      padding: 50px;
+      border-radius: 10px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    h1 {
+      font-family: Liberation Mono, serif;
+      font-size: 2rem;
+      margin-bottom: 20px;
+    }
+
+    .drop-zone {
+      width: 100%;
+      max-width: 350px;
+      padding: 30px;
+      font-size: 1.2rem;
+      border: 2px dashed black;
+      border-radius: 10px;
+      box-shadow: 3px 3px 0px #000;
+      text-align: center;
+      color: grey;
+      cursor: pointer;
+      margin-bottom: 30px;
+    }
+
+    .signup-button {
+      background-color: #ff69b4;
+      color: white;
+      width: 100%;
+      max-width: 350px;
+      padding: 10px;
+      font-size: 1.2rem;
+      border: 2px solid black;
+      border-radius: 5px;
+      box-shadow: 3px 3px 0px #000;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    .signup-button:hover {
+      background-color: #ff1493;
+    }
+
+    .drop-zone.dragover {
+      border-color: #00c1b6;
+      color: #00c1b6;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="drop-container">
+  <h1>DROP XML</h1>
+
+  <!-- Drop Zone -->
+  <div class="drop-zone" id="dropZone">
+    <i class="fas fa-upload"></i>
+    <p>DRAG & DROP</p>
+  </div>
+
+  <!-- Submit Button (in case you want one for uploading) -->
+  <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+    <button class="signup-button" type="submit">PROCESS</button>
+  </form>
+</div>
+
+<script>
+  const dropZone = document.getElementById('dropZone');
+
+  // Handle file drag and drop
+  dropZone.addEventListener('dragover', (event) => {
+    event.preventDefault();
+    dropZone.classList.add('dragover');
+  });
+
+  dropZone.addEventListener('dragleave', () => {
+    dropZone.classList.remove('dragover');
+  });
+
+  dropZone.addEventListener('drop', (event) => {
+    event.preventDefault();
+    dropZone.classList.remove('dragover');
+
+    const files = event.dataTransfer.files;
+    if (files.length) {
+      alert('XML file dropped: ' + files[0].name);
+      // Process the dropped file here (e.g., upload via form)
+    }
+  });
+</script>
+
+</body>
+</html>
