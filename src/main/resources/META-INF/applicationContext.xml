@@ -10,40 +10,12 @@
         http://www.springframework.org/schema/tx
         http://www.springframework.org/schema/tx/spring-tx.xsd">
 
-  <!-- Enable component scanning -->
-  <context:component-scan base-package="nl.joost.xmluploader" />
+  <context:component-scan base-package="nl.joost.xmluploader"/>
 
-  <!-- XML Validator Bean -->
   <bean id="xmlValidator" class="nl.joost.xmluploader.validator.XmlValidator"/>
 
-   DataSource (JDBC configuration)
-  <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-    <property name="driverClassName" value="com.mysql.cj.jdbc.Driver"/>
-    <property name="url" value="jdbc:mariadb://localhost:3306/xmluploader"/>
-    <property name="username" value="root"/>
-    <property name="password" value="password"/>
-  </bean>
-
-  <!-- Transaction Manager -->
-  <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
-    <property name="dataSource" ref="dataSource"/>
-  </bean>
-
-  <!-- Hibernate JPA Configuration -->
-  <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-    <property name="dataSource" ref="dataSource"/>
-    <property name="packagesToScan" value="nl.joost.xmluploader.model"/>
-    <property name="jpaVendorAdapter">
-      <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-        <property name="generateDdl" value="true"/>
-      </bean>
-    </property>
-  </bean>
-
-
-
-  <tx:annotation-driven />
-
+  <tx:annotation-driven/>
 </beans>
+
 
 

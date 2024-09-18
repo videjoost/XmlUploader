@@ -6,6 +6,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
+import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
 public class JpaConfig {
@@ -19,7 +20,6 @@ public class JpaConfig {
     dataSource.setPassword("admin");
     return dataSource;
   }
-
   @Bean
   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
       JpaVendorAdapter jpaVendorAdapter) {
@@ -28,6 +28,11 @@ public class JpaConfig {
     em.setPackagesToScan("nl.joost.xmluploader.model");
     em.setJpaVendorAdapter(jpaVendorAdapter);
     return em;
+  }
+
+  @Bean
+  public JpaVendorAdapter jpaVendorAdapter() {
+    return new HibernateJpaVendorAdapter();
   }
 }
 
