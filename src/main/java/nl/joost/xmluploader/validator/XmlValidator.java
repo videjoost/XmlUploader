@@ -7,6 +7,5 @@ import javax.xml.validation.Schema;
 @Component
 public class XmlValidator {
 
-  private Schema schema;
 
 }
