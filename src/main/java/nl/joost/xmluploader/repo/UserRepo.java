@@ -1,8 +1,10 @@
 package nl.joost.xmluploader.repo;
 
 import nl.joost.xmluploader.model.User;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
+
 
 @Repository
 public interface UserRepo extends JpaRepository<User, Integer> {

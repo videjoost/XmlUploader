@@ -14,10 +14,6 @@ public class HomeController {
     return "index";  // This looks for src/main/resources/templates/index.html
   }
 
-  @GetMapping("/login")
-  public String login() {
-    return "login";  // This looks for src/main/resources/templates/index.html
-  }
 
   @GetMapping("/signup")
   public String showSignupForm(Model model) {
