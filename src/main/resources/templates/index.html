@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Home</title>
+  <style>
+    body {
+      font-family: Liberation Mono, serif;
+      background-color: #fffdd0;
+      display: flex;
+      justify-content: center;
+      align-items: flex-start;
+      height: 100vh;
+      margin: 0;
+      padding-top: 30px;
+    }
+
+    .home-container {
+      text-align: center;
+      padding: 50px;
+      border-radius: 10px;
+      display: flex;
+      justify-content: center;
+      flex-direction: column;
+      align-items: center;
+      width: 100%;
+      max-width: 350px;
+    }
+
+    h1 {
+      font-family: Liberation Mono, serif;
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    p.subtitle {
+      font-family: Liberation Mono, serif;
+      font-size: 1rem;
+      color: grey;
+      margin-bottom: 20px;
+    }
+
+    .button-box {
+      display: flex;
+      justify-content: center;
+      width: 100%;
+      margin: 10px 0;
+    }
+
+    .home-button {
+      width: 100%;
+      max-width: 350px;
+      padding: 15px 30px; /* Increase padding on left and right */
+      font-size: 1.2rem;
+      border: 2px solid black;
+      border-radius: 5px;
+      box-shadow: 3px 3px 0px #000;
+      text-align: center;
+      cursor: pointer;
+      margin-bottom: 10px;
+    }
+
+    .login-button {
+      background-color: #00c1b6;
+      color: white;
+    }
+
+    .login-button:hover {
+      background-color: #009f97;
+    }
+
+    .about-button {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    .about-button:hover {
+      background-color: #ff1493;
+    }
+
+  </style>
+</head>
+<body>
+
+<div class="home-container">
+  <h1>HOME</h1>
+  <p class="subtitle">This app processes and verifies XML files with book information</p>
+
+  <div class="form-container">
+    <form th:action="@{/login}" method="get">
+      <div class="button-box">
+        <button class="home-button login-button" type="submit">LOGIN</button>
+      </div>
+    </form>
+
+    <form th:action="@{/about}" method="get">
+      <div class="button-box">
+        <button class="home-button about-button" type="submit">ABOUT</button>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
