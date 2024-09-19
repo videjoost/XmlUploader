@@ -13,6 +13,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 @EnableWebMvc
 @ComponentScan(basePackages = "nl.joost.xmluploader")
 public class WebConfig implements WebMvcConfigurer {
+  // TODO Is this class necessary?
   @Bean
   public SpringResourceTemplateResolver templateResolver() {
     SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
