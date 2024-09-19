@@ -14,12 +14,5 @@ public class HomeController {
     return "index";  // This looks for src/main/resources/templates/index.html
   }
 
-
-  @GetMapping("/signup")
-  public String showSignupForm(Model model) {
-    model.addAttribute("user", new User()); // Prepare a new User model for signup
-    return "signup"; // Return a signup.html page for user registration
-  }
-
 }
 
