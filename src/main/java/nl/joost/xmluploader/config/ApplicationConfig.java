@@ -9,7 +9,7 @@ import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
 
 @Configuration
-public class JpaConfig {
+public class ApplicationConfig {
 
   @Bean
   public DataSource dataSource() {
