@@ -85,6 +85,9 @@
 
 <div class="login-container">
   <h1>LOGIN</h1>
+  <div th:if="${errorMessage}" style="color: red;">
+    <p th:text="${errorMessage}"></p>
+  </div> <!-- Closing the error message div -->
   <div class="form-container">
     <form th:action="@{/login}" th:object="${user}" method="post">
       <div class="input-box">

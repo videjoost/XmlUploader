@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -75,6 +75,7 @@
   <h1>SIGNUP</h1>
   <div th:if="${errorMessage}" style="color: red;">
     <p th:text="${errorMessage}"></p>
+  </div> <!-- Closing the error message div -->
   <div class="form-container">
     <form th:action="@{/signup}" th:object="${user}" method="post">
       <div class="input-box">
