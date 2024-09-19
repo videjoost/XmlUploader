@@ -1,25 +1,26 @@
 package nl.joost.xmluploader.config;
 
 import javax.sql.DataSource;
+import nl.joost.xmluploader.validator.XmlValidator;
 import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.orm.jpa.JpaVendorAdapter;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
 import org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 @Configuration
+@ComponentScan(basePackages = "nl.joost.xmluploader")
+@EnableTransactionManagement
 public class ApplicationConfig {
 
   @Bean
-  public DataSource dataSource() {
-    DriverManagerDataSource dataSource = new DriverManagerDataSource();
-    dataSource.setDriverClassName("org.mariadb.jdbc.Driver");
-    dataSource.setUrl("jdbc:mariadb://localhost:3306/xmluploader");
-    dataSource.setUsername("admin");
-    dataSource.setPassword("admin");
-    return dataSource;
+  public XmlValidator xmlValidator() {
+    return new XmlValidator();
   }
+
   @Bean
   public LocalContainerEntityManagerFactoryBean entityManagerFactory(DataSource dataSource,
       JpaVendorAdapter jpaVendorAdapter) {
