@@ -10,7 +10,7 @@ public class UserService {
 
   private final UserRepo userRepository;
 
-  @Autowired
+
   public UserService(UserRepo userRepository) {
     this.userRepository = userRepository;
   }
