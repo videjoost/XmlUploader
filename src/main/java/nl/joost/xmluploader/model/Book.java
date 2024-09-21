@@ -17,6 +17,7 @@ import lombok.NoArgsConstructor;
 public class Book {
 
   @Id
+  @Column(name = "id")
   private int id;
 
   @Column(name = "author", nullable = false)
@@ -26,7 +27,7 @@ public class Book {
   private String title;
 
   @Column(name = "genre", nullable = false)
-private String genre;
+  private String genre;
 
   @Column(name = "price", nullable = false)
   private double price;
