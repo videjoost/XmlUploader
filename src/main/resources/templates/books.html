@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Books</title>
+  <style>
+    .book-card {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin: 10px;
+      padding: 10px;
+      border: 1px solid #ccc;
+      border-radius: 5px;
+      width: 200px;
+    }
+  </style>
+</head>
+<body>
+<h1>Book</h1>
+<div id="books-container">
+  <th:block th:each="book : ${books}">
+    <div class="book-card">
+      <p><strong>Author:</strong> <span th:text="${book.author}"></span></p>
+      <p><strong>Genre:</strong> <span th:text="${book.genre}"></span></p>
+      <p><strong>Price:</strong> <span th:text="${book.price}"></span></p>
+      <p><strong>Publish Date:</strong> <span th:text="${book.publishDate}"></span></p>
+      <p><strong>Description:</strong> <span th:text="${book.description}"></span></p>
+    </div>
+  </th:block>
+</div>
+</body>
+</html>

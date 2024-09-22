@@ -48,6 +48,7 @@ public class XmlProcessingService {
         book.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());
         book.setPrice(
             Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent()));
+
         book.setPublishDate(element.getElementsByTagName("publish_date").item(0).getTextContent());
         book.setDescription(element.getElementsByTagName("description").item(0).getTextContent());
 
