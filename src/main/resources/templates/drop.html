@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" lang="">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -41,7 +41,7 @@
       font-size: 1.2rem;
       border: 2px dashed black;
       border-radius: 10px;
-      box-shadow: 3px 3px 0px #000;
+      box-shadow: 3px 3px #000;
       text-align: center;
       color: grey;
       cursor: pointer;
@@ -57,7 +57,7 @@
       font-size: 1.2rem;
       border: 2px solid black;
       border-radius: 5px;
-      box-shadow: 3px 3px 0px #000;
+      box-shadow: 3px 3px #000;
       cursor: pointer;
       text-align: center;
     }
@@ -86,7 +86,6 @@
 
   <!-- Submit Button (in case you want one for uploading) -->
   <form th:action="@{/private/xml/upload}" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept="application/xml" required>
     <button class="signup-button" type="submit">PROCESS</button>
   </form>
 </div>
