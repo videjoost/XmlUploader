@@ -4,6 +4,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop XML</title>
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
   <style>
     body {
       font-family: Liberation Mono, serif;
@@ -84,7 +85,8 @@
   </div>
 
   <!-- Submit Button (in case you want one for uploading) -->
-  <form th:action="@{/upload}" method="post" enctype="multipart/form-data">
+  <form th:action="@{/private/xml/upload}" method="post" enctype="multipart/form-data">
+    <input type="file" name="file" accept="application/xml" required>
     <button class="signup-button" type="submit">PROCESS</button>
   </form>
 </div>

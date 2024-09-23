@@ -30,11 +30,17 @@ public class XmlProcessingService {
       throw new Exception("Invalid file type.");
     }
     InputStream inputStream = file.getInputStream();
+
+    // validate xml
+    xmlValidator.validateXml(inputStream);
+
+    // reset inputStream to beginning
+    inputStream.reset();
+
+    // parse
     DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
     DocumentBuilder builder = factory.newDocumentBuilder();
     Document document = builder.parse(inputStream);
-
-    xmlValidator.validateXml(inputStream);
 
     NodeList nodeList = document.getElementsByTagName("book");
     for (int i = 0; i < nodeList.getLength(); i++) {
@@ -42,7 +48,7 @@ public class XmlProcessingService {
       if (node.getNodeType() == Node.ELEMENT_NODE) {
         Element element = (Element) node;
         Book book = new Book();
-        book.setId(Integer.parseInt(element.getElementsByTagName("id").item(0).getTextContent()));
+        book.setId(Integer.parseInt(element.getAttribute("id").substring(2)));
         book.setAuthor(element.getElementsByTagName("title").item(0).getTextContent());
         book.setTitle(element.getElementsByTagName("author").item(0).getTextContent());
         book.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());
