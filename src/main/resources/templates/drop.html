@@ -92,6 +92,7 @@
 
 <script>
   const dropZone = document.getElementById('dropZone');
+  const dropZoneText = dropZone.querySelector('p');
 
   // Handle file drag and drop
   dropZone.addEventListener('dragover', (event) => {
@@ -109,10 +110,13 @@
 
     const files = event.dataTransfer.files;
     if (files.length) {
+      dropZoneText.textContent = 'File dropped:' + files[0].name;
       alert('XML file dropped: ' + files[0].name);
       // Process the dropped file here (e.g., upload via form)
     }
   });
+
+
 </script>
 
 </body>
