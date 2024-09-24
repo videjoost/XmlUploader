@@ -75,48 +75,83 @@
 </head>
 <body>
 
-<div class="drop-container">
+<div class="upload-container">
   <h1>DROP XML</h1>
 
-  <!-- Drop Zone -->
-  <div class="drop-zone" id="dropZone">
-    <i class="fas fa-upload"></i>
-    <p>DRAG & DROP</p>
-  </div>
-
-  <!-- Submit Button (in case you want one for uploading) -->
   <form th:action="@{/private/xml/upload}" method="post" enctype="multipart/form-data">
-    <button class="signup-button" type="submit">PROCESS</button>
+    <input type="file" name="file" accept=".xml" class="file-input" required>
+    <button class="upload-button" type="submit">Upload & Process</button>
   </form>
 </div>
 
 <script>
+
+  // TODO delete drop zone
   const dropZone = document.getElementById('dropZone');
   const dropZoneText = dropZone.querySelector('p');
+  const form = document.querySelector('form');
 
-  // Handle file drag and drop
+  let droppedFile = null;
+
   dropZone.addEventListener('dragover', (event) => {
     event.preventDefault();
     dropZone.classList.add('dragover');
+    console.log('file is being dragged over the drop zone');
   });
 
   dropZone.addEventListener('dragleave', () => {
     dropZone.classList.remove('dragover');
+    console.log('file has left the drop zone');
   });
 
   dropZone.addEventListener('drop', (event) => {
     event.preventDefault();
     dropZone.classList.remove('dragover');
+    console.log('file dropped in the drop zone');
 
     const files = event.dataTransfer.files;
     if (files.length) {
-      dropZoneText.textContent = 'File dropped:' + files[0].name;
-      alert('XML file dropped: ' + files[0].name);
-      // Process the dropped file here (e.g., upload via form)
+      droppedFile = files[0];
+      if (droppedFile.type !== 'text/xml') {
+        alert('Please drop an XML file.');
+        droppedFile = null;
+        return;
+      }
+      dropZoneText.textContent = 'file dropped: ' + droppedFile.name;
+      console.log('file dropped:', droppedFile);
+      } else {
+      console.log('no file dropped');
     }
   });
 
+  form.addEventListener('submit', (event) => {
+    event.preventDefault();
 
+    if (droppedFile) {
+      const formData = new FormData();
+      formData.append('file', droppedFile);
+
+      fetch(form.action, {
+        method: 'POST',
+        body: formData
+      })
+      .then(response => {
+        if (!response.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return response.text();
+      })
+      .then(data => {
+        alert(data);
+      })
+      .catch(error => {
+        console.error('Error:', error);
+        alert('Error: ' + error.message);
+      });
+    } else {
+      alert('Please drop a file first.');
+    }
+  });
 </script>
 
 </body>
