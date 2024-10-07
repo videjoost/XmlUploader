@@ -13,7 +13,8 @@
               <xs:element name="publish_date" type="xs:date"/>
               <xs:element name="description" type="xs:string"/>
             </xs:sequence>
-            <xs:attribute name="id" type="xs:int" use="required"/>
+            <xs:attribute name="id" type="xs:string" use="required"/>
+
           </xs:complexType>
         </xs:element>
       </xs:sequence>
