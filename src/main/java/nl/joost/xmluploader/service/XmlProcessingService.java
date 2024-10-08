@@ -3,28 +3,31 @@ package nl.joost.xmluploader.service;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.parsers.ParserConfigurationException;
-import nl.joost.xmluploader.model.Book;
 import nl.joost.xmluploader.processor.XmlProcessor;
 import nl.joost.xmluploader.repo.BookRepo;
+import nl.joost.xmluploader.repo.MovieRepo;
+import nl.joost.xmluploader.repo.MusicRepo;
 import nl.joost.xmluploader.util.XmlProcessorFactory;
 import nl.joost.xmluploader.validator.XmlValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.*;
-import org.xml.sax.SAXException;
 
 @Service
 public class XmlProcessingService {
 
   private final XmlValidator xmlValidator;
-  private final BookRepo bookRepo; // Still needed for processor injection
+  private final BookRepo bookRepo;
+  private final MusicRepo musicRepo;
+  private final MovieRepo movieRepo;
 
   @Autowired
-  public XmlProcessingService(XmlValidator xmlValidator, BookRepo bookRepo) {
+  public XmlProcessingService(XmlValidator xmlValidator, BookRepo bookRepo, MusicRepo musicRepo, MovieRepo movieRepo) {
     this.xmlValidator = xmlValidator;
     this.bookRepo = bookRepo;
+    this.musicRepo = musicRepo;
+    this.movieRepo = movieRepo;
   }
 
   public void processXmlFile(MultipartFile file) throws Exception {
@@ -32,25 +35,40 @@ public class XmlProcessingService {
       throw new Exception("Invalid file type.");
     }
 
-    try (InputStream inputstream = file.getInputStream()) {
-      xmlValidator.validateXml(inputstream); // Keep the validation
+    try (InputStream inputStream = file.getInputStream()) {
+      String xmlType = detectXmlType(file);
+      xmlValidator.validateXml(inputStream, xmlType);
     }
 
-    try (InputStream inputstream = file.getInputStream()) {
-      String xmlType = detectXmlType(file); // Implement logic to detect XML type, e.g., "book"
-      XmlProcessor processor = XmlProcessorFactory.getProcessor(xmlType, bookRepo);
-      processor.processXml(inputstream);
+    try (InputStream inputStream = file.getInputStream()) {
+      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+      DocumentBuilder builder = factory.newDocumentBuilder();
+      Document document = builder.parse(inputStream);
+
+      processEntities(document, "book", XmlProcessorFactory.getProcessor("book", bookRepo, musicRepo, movieRepo));
+      processEntities(document, "album", XmlProcessorFactory.getProcessor("music", bookRepo, musicRepo, movieRepo));
+      processEntities(document, "movie", XmlProcessorFactory.getProcessor("movie", bookRepo, musicRepo, movieRepo));
+    }
+  }
+
+  private void processEntities(Document document, String tagName, XmlProcessor processor) throws Exception {
+    NodeList nodeList = document.getElementsByTagName(tagName);
+    for (int i = 0; i < nodeList.getLength(); i++) {
+      Node node = nodeList.item(i);
+      if (node.getNodeType() == Node.ELEMENT_NODE) {
+        processor.processXml(node);
+      }
     }
   }
 
   private String detectXmlType(MultipartFile file) {
-    // Implement logic to detect the XML type (can be based on the root tag or metadata)
-    return "book"; // Example: this would return "book" for book XMLs
+    if (file.getOriginalFilename().contains("book")) {
+      return "book";
+    } else if (file.getOriginalFilename().contains("music")) {
+      return "music";
+    } else if (file.getOriginalFilename().contains("movie")) {
+      return "movie";
+    }
+    return "unknown";
   }
 }
-
-
-
-
-
-

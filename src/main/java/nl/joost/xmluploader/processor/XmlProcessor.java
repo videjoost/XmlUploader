@@ -1,9 +1,9 @@
 package nl.joost.xmluploader.processor;
 
-import java.io.InputStream;
+import org.w3c.dom.Node;
 
 public interface XmlProcessor {
 
-  void processXml(InputStream inputStream) throws Exception;
+  void processXml(Node node) throws Exception;
 }
 
