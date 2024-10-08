@@ -16,6 +16,7 @@ public class MovieXmlProcessor implements XmlProcessor {
 
   @Override
   public void processXml(Node node) throws Exception {
+    try {
     Element element = (Element) node;
     Movie movie = new Movie();
     movie.setDirector(element.getElementsByTagName("director").item(0).getTextContent());
@@ -25,5 +26,8 @@ public class MovieXmlProcessor implements XmlProcessor {
     movie.setReleaseDate(element.getElementsByTagName("release_date").item(0).getTextContent());
     movie.setDescription(element.getElementsByTagName("description").item(0).getTextContent());
     movieRepo.save(movie);
+  } catch (Exception e) {
+    throw new Exception("Error processing movie XML", e);
+  }
   }
 }
