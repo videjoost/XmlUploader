@@ -18,7 +18,6 @@ public class MusicXmlProcessor implements XmlProcessor {
   public void processXml(Node node) throws Exception {
     Element element = (Element) node;
     Music album = new Music();
-    album.setId(Integer.parseInt(element.getAttribute("id").substring(2)));
     album.setArtist(element.getElementsByTagName("artist").item(0).getTextContent());
     album.setTitle(element.getElementsByTagName("title").item(0).getTextContent());
     album.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());

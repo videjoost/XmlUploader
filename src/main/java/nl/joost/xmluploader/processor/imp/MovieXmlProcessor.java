@@ -18,7 +18,6 @@ public class MovieXmlProcessor implements XmlProcessor {
   public void processXml(Node node) throws Exception {
     Element element = (Element) node;
     Movie movie = new Movie();
-    movie.setId(Integer.parseInt(element.getAttribute("id").substring(2)));
     movie.setDirector(element.getElementsByTagName("director").item(0).getTextContent());
     movie.setTitle(element.getElementsByTagName("title").item(0).getTextContent());
     movie.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());

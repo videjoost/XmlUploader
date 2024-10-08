@@ -18,7 +18,6 @@ public class BookXmlProcessor implements XmlProcessor {
   public void processXml(Node node) throws Exception {
     Element element = (Element) node;
     Book book = new Book();
-    book.setId(Integer.parseInt(element.getAttribute("id").substring(2)));
     book.setAuthor(element.getElementsByTagName("author").item(0).getTextContent());
     book.setTitle(element.getElementsByTagName("title").item(0).getTextContent());
     book.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());
