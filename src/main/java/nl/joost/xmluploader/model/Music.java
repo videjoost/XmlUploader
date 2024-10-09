@@ -39,4 +39,47 @@ public class Music {
 
   @Column(name = "description", nullable = false)
   private String description;
+
+  public static class Builder {
+    private String artist;
+    private String title;
+    private String genre;
+    private double price;
+    private String releaseDate;
+    private String description;
+
+    public Builder artist(String artist) {
+      this.artist = artist;
+      return this;
+    }
+
+    public Builder title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder genre(String genre) {
+      this.genre = genre;
+      return this;
+    }
+
+    public Builder price(double price) {
+      this.price = price;
+      return this;
+    }
+
+    public Builder releaseDate(String releaseDate) {
+      this.releaseDate = releaseDate;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Music build() {
+      return new Music(0, artist, title, genre, price, releaseDate, description);
+    }
+  }
 }

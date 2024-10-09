@@ -18,13 +18,14 @@ public class MovieXmlProcessor implements XmlProcessor {
   public void processXml(Node node) throws Exception {
     try {
     Element element = (Element) node;
-    Movie movie = new Movie();
-    movie.setDirector(element.getElementsByTagName("director").item(0).getTextContent());
-    movie.setTitle(element.getElementsByTagName("title").item(0).getTextContent());
-    movie.setGenre(element.getElementsByTagName("genre").item(0).getTextContent());
-    movie.setPrice(Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent()));
-    movie.setReleaseDate(element.getElementsByTagName("release_date").item(0).getTextContent());
-    movie.setDescription(element.getElementsByTagName("description").item(0).getTextContent());
+    Movie movie = new Movie.Builder()
+        .director(element.getElementsByTagName("director").item(0).getTextContent())
+        .title(element.getElementsByTagName("title").item(0).getTextContent())
+        .genre(element.getElementsByTagName("genre").item(0).getTextContent())
+        .price(Double.parseDouble(element.getElementsByTagName("price").item(0).getTextContent()))
+        .releaseDate(element.getElementsByTagName("release_date").item(0).getTextContent())
+        .description(element.getElementsByTagName("description").item(0).getTextContent())
+        .build();
     movieRepo.save(movie);
   } catch (Exception e) {
     throw new Exception("Error processing movie XML", e);

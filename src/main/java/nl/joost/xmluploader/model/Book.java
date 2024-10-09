@@ -39,4 +39,47 @@ public class Book {
 
   @Column(name = "description", nullable = false)
   private String description;
+
+  public static class Builder {
+    private String author;
+    private String title;
+    private String genre;
+    private double price;
+    private String publishDate;
+    private String description;
+
+    public Builder author(String author) {
+      this.author = author;
+      return this;
+    }
+
+    public Builder title(String title) {
+      this.title = title;
+      return this;
+    }
+
+    public Builder genre(String genre) {
+      this.genre = genre;
+      return this;
+    }
+
+    public Builder price(double price) {
+      this.price = price;
+      return this;
+    }
+
+    public Builder publishDate(String publishDate) {
+      this.publishDate = publishDate;
+      return this;
+    }
+
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
+
+    public Book build() {
+      return new Book(0, author, title, genre, price, publishDate, description);
+    }
+  }
 }

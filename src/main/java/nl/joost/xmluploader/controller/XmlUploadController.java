@@ -30,16 +30,14 @@ public class XmlUploadController {
 
   @PostMapping(value = "/upload", produces = {MediaType.TEXT_PLAIN_VALUE})
   @ResponseBody
-  public ResponseEntity<String> uploadXml(@RequestParam("file") MultipartFile file) {
+  public ResponseEntity<String> uploadXml(@RequestParam("file") MultipartFile file, @RequestParam("type") String xmlType) {
     log.info("File upload initiated");
-
     try {
-      xmlProcessingService.processXmlFile(file);
-      return ResponseEntity.status(HttpStatus.OK).body("File uploaded and processed successfully.");
+      xmlProcessingService.processXmlFile(file.getInputStream(), xmlType);
+      return new ResponseEntity<>("File uploaded and processed successfully.", HttpStatus.OK);
     } catch (Exception e) {
       log.error("Error processing file: {}", e.getMessage(), e);
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("An error occurred while processing the file: " + e.getMessage());
-    }
+      return new ResponseEntity<>("Error processing file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);}
   }
 
   @GetMapping("/success")

@@ -35,23 +35,47 @@ public class XmlProcessingService {
       throw new Exception("Invalid file type.");
     }
 
-    try (InputStream inputStream = file.getInputStream()) {
-      String xmlType = detectXmlType(file);
-      xmlValidator.validateXml(inputStream, xmlType);
-    }
+    String xmlType = detectXmlType(file);
 
     try (InputStream inputStream = file.getInputStream()) {
-      DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-      DocumentBuilder builder = factory.newDocumentBuilder();
-      Document document = builder.parse(inputStream);
-
-      processEntities(document, "book", XmlProcessorFactory.getProcessor("book", bookRepo, musicRepo, movieRepo));
-      processEntities(document, "album", XmlProcessorFactory.getProcessor("music", bookRepo, musicRepo, movieRepo));
-      processEntities(document, "movie", XmlProcessorFactory.getProcessor("movie", bookRepo, musicRepo, movieRepo));
+      // Validate and process the XML
+      processXmlFile(inputStream, xmlType);
     }
   }
 
-  private void processEntities(Document document, String tagName, XmlProcessor processor) throws Exception {
+  public void processXmlFile(InputStream xmlInputStream, String xmlType) throws Exception {
+    // Validate the XML
+    xmlValidator.validateXml(xmlInputStream, xmlType);
+
+    // Reset the input stream to read it again
+    xmlInputStream.reset();
+
+    // Parse the XML document
+    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+    DocumentBuilder builder = factory.newDocumentBuilder();
+    Document document = builder.parse(xmlInputStream);
+
+    // Process the entities based on the xmlType
+    processEntities(document, xmlType);
+  }
+
+  private void processEntities(Document document, String xmlType) throws Exception {
+    String tagName;
+    switch (xmlType.toLowerCase()) {
+      case "book":
+        tagName = "book";
+        break;
+      case "music":
+        tagName = "album";
+        break;
+      case "movie":
+        tagName = "movie";
+        break;
+      default:
+        throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
+    }
+
+    XmlProcessor processor = XmlProcessorFactory.getProcessor(xmlType, bookRepo, musicRepo, movieRepo);
     NodeList nodeList = document.getElementsByTagName(tagName);
     for (int i = 0; i < nodeList.getLength(); i++) {
       Node node = nodeList.item(i);
