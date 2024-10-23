@@ -5,85 +5,11 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Login</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <style>
-    body {
-      font-family: Liberation Mono, serif;
-      background-color: #fffdd0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding-top: 30px;
-    }
+  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 
-    .login-container {
-      text-align: center;
-      padding: 50px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center; /* This centers all content */
-      width: 100%;
-      max-width: 350px;
-    }
-
-    h1 {
-      font-family: Liberation Mono, serif;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .form-container {
-
-      width: 80%;
-
-    }
-
-    .input-box,
-    .button-box {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .input-box input,
-    .login-button,
-    .signup-button {
-      width: 100%;
-      max-width: 350px;
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid black;
-      border-radius: 5px;
-      box-shadow: 3px 3px 0px #000;
-      text-align: center;
-    }
-
-    .login-button {
-      background-color: #00c1b6;
-      color: white;
-    }
-
-    .login-button:hover {
-      background-color: #009f97;
-    }
-
-    .signup-button {
-      background-color: #ff69b4;
-      color: white;
-    }
-
-    .signup-button:hover {
-      background-color: #ff1493;
-    }
-
-  </style>
 </head>
 <body>
-
+<div th:replace="topmenu :: topMenu"></div>
 <div class="login-container">
   <h1>LOGIN</h1>
   <div th:if="${errorMessage}" style="color: red;">

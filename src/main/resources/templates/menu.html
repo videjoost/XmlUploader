@@ -5,91 +5,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Menu</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <style>
-    body {
-      font-family: Liberation Mono, serif;
-      background-color: #fffdd0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding-top: 30px;
-    }
-
-    .menu-container {
-      text-align: center;
-      padding: 50px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 350px;
-    }
-
-    h1 {
-      font-family: Liberation Mono, serif;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .form-container {
-      width: 80%;
-    }
-
-    .input-box,
-    .button-box {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .menu-button {
-      width: 100%; /* Full width for inputs and buttons */
-      max-width: 350px; /* Constrain the width */
-      padding: 15px;
-      font-size: 1.2rem;
-      border-radius: 5px;
-      border: 2px solid black;
-      box-shadow: 3px 3px 0px #000;
-      margin-bottom: 10px;
-      text-align: center;
-      cursor: pointer;
-    }
-
-    .menu-button.upload {
-      background-color: #ffd700; /* Yellow color for Upload XML */
-      color: black;
-    }
-
-    .menu-button.upload:hover {
-      background-color: #e5c300;
-    }
-
-    .menu-button.see-books {
-      background-color: #00c1b6; /* Teal color for See Books */
-      color: white;
-    }
-
-    .menu-button.see-books:hover {
-      background-color: #009f97;
-    }
-
-    .menu-button.logout {
-      background-color: #ff69b4; /* Pink color for Log Out */
-      color: white;
-    }
-
-    .menu-button.logout:hover {
-      background-color: #ff1493;
-    }
-
-  </style>
+  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
+<div th:replace="topmenu :: topMenu"></div>
 
 <div class="menu-container">
   <h1>MENU</h1>
@@ -100,9 +19,9 @@
       </div>
     </form>
 
-    <form th:action="@{/books}" method="get">
+    <form th:action="@{/objects}" method="get">
       <div class="button-box">
-        <button class="menu-button see-books" type="submit">SEE BOOKS</button>
+        <button class="menu-button see-objects" type="submit">IMPORTED OBJECTS</button>
       </div>
     </form>
 

@@ -22,7 +22,7 @@ public class BookController {
   public String listBooks(Model model) {
     List<Book> books = bookrepo.findAll();
     model.addAttribute("books", books);
-    return "books";
+    return "objects";
   }
 
 }

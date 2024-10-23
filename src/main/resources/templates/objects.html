@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Imported Objects</title>
+  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
+  <meta charset="UTF-8">
+</head>
+<body>
+<div th:replace="topmenu :: topMenu"></div>
+<div class="menu-container">
+  <h1>Imported Objects</h1>
+
+  <div class="button-box">
+    <form th:action="@{/objects}" method="get">
+      <button class="all-button" type="submit" name="type" value="all"
+              th:classappend="${selectedType == 'all'} ? 'active' : ''">All
+      </button>
+      <button class="book-button" type="submit" name="type" value="book"
+              th:classappend="${selectedType == 'book'} ? 'active' : ''">Book
+      </button>
+      <button class="music-button" type="submit" name="type" value="music"
+              th:classappend="${selectedType == 'music'} ? 'active' : ''">Music
+      </button>
+      <button class="movie-button" type="submit" name="type" value="movie"
+              th:classappend="${selectedType == 'movie'} ? 'active' : ''">Movie
+      </button>
+    </form>
+  </div>
+
+    <h2 th:if="${selectedType == 'all' || selectedType == 'music'}">Music</h2>
+    <table th:if="${selectedType == 'all' || selectedType == 'music'}">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Director</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Release Date</th>
+      <th>Description</th>
+    </thead>
+    <tbody class="music-card">
+    <tr th:each="music : ${music}">
+      <td class="card-text" th:text="${music.title}"></td>
+      <td class="card-text" th:text="${music.artist}"></td>
+      <td class="card-text" th:text="${music.genre}"></td>
+      <td class="card-text" th:text="${music.price}"></td>
+      <td class="card-text" th:text="${music.releaseDate}"></td>
+      <td class="card-text" th:text="${music.description}"></td>
+  </table>
+
+  <h2 th:if="${selectedType == 'all' || selectedType == 'movie'}">Movies</h2>
+  <table th:if="${selectedType == 'all' || selectedType == 'movie'}">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Artist</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Release Date</th>
+      <th>Description</th>
+    </thead>
+    <tbody class="movie-card">
+    <tr th:each="movie : ${movies}">
+      <td class="card-text" th:text="${movie.title}"></td>
+      <td class="card-text" th:text="${movie.director}"></td>
+      <td class="card-text" th:text="${movie.genre}"></td>
+      <td class="card-text" th:text="${movie.price}"></td>
+      <td class="card-text" th:text="${movie.releaseDate}"></td>
+      <td class="card-text" th:text="${movie.description}"></td>
+  </table>
+
+  <h2 th:if="${selectedType == 'all' || selectedType == 'book'}">Books</h2>
+  <table th:if="${selectedType == 'all' || selectedType == 'book'}">
+    <thead>
+    <tr>
+      <th>Title</th>
+      <th>Author</th>
+      <th>Genre</th>
+      <th>Price</th>
+      <th>Release Date</th>
+      <th>Description</th>
+    </thead>
+    <tbody class="book-card">
+    <tr th:each="book : ${books}">
+      <td class="card-text" th:text="${book.title}"></td>
+      <td class="card-text" th:text="${book.author}"></td>
+      <td class="card-text" th:text="${book.genre}"></td>
+      <td class="card-text" th:text="${book.price}"></td>
+      <td class="card-text" th:text="${book.publishDate}"></td>
+      <td class="card-text" th:text="${book.description}"></td>
+  </table>
+  <a href="/" class="botton">Back to Menu</a>
+</div>
+
+
+</body>
+</html>

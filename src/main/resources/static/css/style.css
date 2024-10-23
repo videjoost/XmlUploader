@@ -51,6 +51,11 @@ body {
   padding-top: 30px;
 }
 
+
+.upload-container,
+.drop-container,
+.signup-container,
+.login-container,
 .home-container {
   text-align: center;
   padding: 50px;
@@ -77,6 +82,7 @@ p.subtitle {
   margin-bottom: 20px;
 }
 
+.input-box,
 .button-box {
   display: flex;
   justify-content: center;
@@ -85,7 +91,15 @@ p.subtitle {
 
 }
 
-.home-button {
+.custom-file-label {
+  display: inline-block;
+}
+
+
+
+.login-button,
+.signup-button
+{
   width: 100%; /* Full width for inputs and buttons */
   max-width: 350px; /* Constrain the width */
   padding: 15px 60px;
@@ -95,22 +109,218 @@ p.subtitle {
   box-shadow: 3px 3px 0px #000;
   text-align: center;
 }
+.home-button {
+  width: 100%;
+  max-width: 350px;
+  padding: 15px 30px; /* Increase padding on left and right */
+  font-size: 1.2rem;
+  border: 2px solid black;
+  border-radius: 5px;
+  box-shadow: 3px 3px  #000;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 10px;
+}
 
+.custom-file-label,
 .login-button {
   background-color: #00c1b6;
   color: white;
 }
 
+.custom-file-label:hover,
 .login-button:hover {
   background-color: #009f97;
 }
 
+
+.upload-button,
 .about-button {
   background-color: #ff69b4;
   color: white;
 }
 
+.upload-button:hover,
 .about-button:hover {
   background-color: #ff1493;
+}
+
+
+.signup-button {
+  background-color: #ff69b4;
+  color: white;
+}
+
+.signup-button:hover {
+  background-color: #ff1493;
+}
+body {
+  font-family: Liberation Mono, serif;
+  background-color: #fffdd0;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  height: 100vh;
+  margin: 0;
+  padding-top: 30px;
+}
+
+
+.menu-container {
+  text-align: center;
+  padding: 50px;
+  border-radius: 10px;
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 350px;
+}
+
+h1 {
+  font-family: Liberation Mono, serif;
+  font-size: 2rem;
+  margin-bottom: 20px;
+}
+
+.custom-file-upload,
+
+.input-box,
+.button-box {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  margin: 10px 0;
+}
+
+/*hide file input*/
+.file-input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.button-box-vert {
+  display: flex;
+  justify-content: center;
+  flex-direction: row;
+  gap: 10px;
+/*  flex-wrap: nowrap;*/
+  width: 100%;
+  margin: 10px 0;
+}
+
+.menu-button-objects {
+  width: 50%;
+  padding: 10px;
+  font-size: 100%;
+  border-radius: 5px;
+  border: 2px solid black;
+  box-shadow: 3px 3px #000;
+  text-align: center;
+  cursor: pointer;
+  margin-bottom: 0;
+}
+
+input,
+.custom-file-label,
+.upload-button,
+.menu-button {
+  width: 100%; /* Full width for inputs and buttons */
+  max-width: 350px; /* Constrain the width */
+  padding: 15px;
+  font-size: 1.2rem;
+  border-radius: 5px;
+  border: 2px solid black;
+  box-shadow: 3px 3px 0px #000;
+  margin-bottom: 10px;
+  text-align: center;
+  cursor: pointer;
+}
+.upload-button{
+  background-color: #ff69b4;
+  color: white;
+  margin-top: 10px;
+}
+
+.movie-card,
+.movie-button,
+.all-button,
+.menu-button.upload {
+  background-color: #ffd700; /* Yellow color for Upload XML */
+  color: black;
+}
+
+.menu-button.upload:hover {
+  background-color: #e5c300;
+}
+
+.book-card,
+.book-button,
+.menu-button.see-objects {
+  background-color: #00c1b6; /* Teal color for See Objects */
+  color: white;
+}
+
+.menu-button.see-objects:hover,
+.book-button:hover,
+.menu-button.see-books:hover {
+  background-color: #009f97;
+}
+
+.music-card,
+.music-button,
+.menu-button.logout {
+  background-color: #ff69b4; /* Pink color for Log Out */
+  color: white;
+}
+
+.menu-button.logout:hover {
+  background-color: #ff1493;
+}
+
+.top-menu {
+  width: 100%;
+  background-color: #333;
+  padding: 10px 0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: 1000; /* Ensure the menu stays on top */
+}
+
+.top-menu nav ul {
+  list-style-type: none; /* Remove bullet points */
+  margin: 0;
+  padding: 0;
+  display: flex; /* This makes the items align horizontally */
+  justify-content: center; /* Center the menu items horizontally */
+}
+
+.top-menu nav ul li {
+  margin-right: 20px; /* Add space between the links */
+}
+
+.top-menu nav ul li:last-child {
+  margin-right: 0; /* Remove margin for the last item */
+}
+
+.top-menu nav ul li a {
+  text-decoration: none;
+  color: white;
+  font-family: Liberation Mono, serif;
+  font-size: 1.2rem;
+  padding: 10px 15px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.top-menu nav ul li a:hover {
+  background-color: #555;
 }
 

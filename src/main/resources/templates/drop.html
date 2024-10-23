@@ -5,154 +5,27 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Drop XML</title>
   <link rel="icon" type="image/x-icon" href="/favicon.ico">
-  <style>
-    body {
-      font-family: Liberation Mono, serif;
-      background-color: #fffdd0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding-top: 30px;
-    }
-
-    .drop-container {
-      text-align: center;
-      padding: 50px;
-      border-radius: 10px;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      width: 100%;
-      max-width: 350px;
-    }
-
-    h1 {
-      font-family: Liberation Mono, serif;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .drop-zone {
-      width: 100%;
-      max-width: 350px;
-      padding: 30px;
-      font-size: 1.2rem;
-      border: 2px dashed black;
-      border-radius: 10px;
-      box-shadow: 3px 3px #000;
-      text-align: center;
-      color: grey;
-      cursor: pointer;
-      margin-bottom: 30px;
-    }
-
-    .signup-button {
-      background-color: #ff69b4;
-      color: white;
-      width: 100%;
-      max-width: 350px;
-      padding: 10px;
-      font-size: 1.2rem;
-      border: 2px solid black;
-      border-radius: 5px;
-      box-shadow: 3px 3px #000;
-      cursor: pointer;
-      text-align: center;
-    }
-
-    .signup-button:hover {
-      background-color: #ff1493;
-    }
-
-    .drop-zone.dragover {
-      border-color: #00c1b6;
-      color: #00c1b6;
-    }
-
-  </style>
+  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
 </head>
 <body>
-
+<div th:replace="topmenu :: topMenu"></div>
 <div class="upload-container">
   <h1>DROP XML</h1>
 
   <form th:action="@{/private/xml/upload}" method="post" enctype="multipart/form-data">
-    <input type="file" name="file" accept=".xml" class="file-input" required>
+    <div class="custom-file-upload">
+      <label for="file-upload" class="custom-file-label">Choose XML File</label>
+      <input id="file-upload" class="file-input" type="file" name="file" accept=".xml" required>
+    </div>
     <button class="upload-button" type="submit">Upload & Process</button>
   </form>
 </div>
-
+</body>
 <script>
-
-  // TODO delete drop zone
-  const dropZone = document.getElementById('dropZone');
-  const dropZoneText = dropZone.querySelector('p');
-  const form = document.querySelector('form');
-
-  let droppedFile = null;
-
-  dropZone.addEventListener('dragover', (event) => {
-    event.preventDefault();
-    dropZone.classList.add('dragover');
-    console.log('file is being dragged over the drop zone');
-  });
-
-  dropZone.addEventListener('dragleave', () => {
-    dropZone.classList.remove('dragover');
-    console.log('file has left the drop zone');
-  });
-
-  dropZone.addEventListener('drop', (event) => {
-    event.preventDefault();
-    dropZone.classList.remove('dragover');
-    console.log('file dropped in the drop zone');
-
-    const files = event.dataTransfer.files;
-    if (files.length) {
-      droppedFile = files[0];
-      if (droppedFile.type !== 'text/xml') {
-        alert('Please drop an XML file.');
-        droppedFile = null;
-        return;
-      }
-      dropZoneText.textContent = 'file dropped: ' + droppedFile.name;
-      console.log('file dropped:', droppedFile);
-      } else {
-      console.log('no file dropped');
-    }
-  });
-
-  form.addEventListener('submit', (event) => {
-    event.preventDefault();
-
-    if (droppedFile) {
-      const formData = new FormData();
-      formData.append('file', droppedFile);
-
-      fetch(form.action, {
-        method: 'POST',
-        body: formData
-      })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error('Network response was not ok');
-        }
-        return response.text();
-      })
-      .then(data => {
-        alert(data);
-      })
-      .catch(error => {
-        console.error('Error:', error);
-        alert('Error: ' + error.message);
-      });
-    } else {
-      alert('Please drop a file first.');
-    }
+  document.getElementById("file-upload").addEventListener("change", function(){
+    var fileName = this.files[0].name;
+    var label = this.previousElementSibling; // The label before the input
+    label.innerHTML = fileName;
   });
 </script>
-
-</body>
 </html>

@@ -3,74 +3,11 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="../static/css/style.css" th:href="@{/css/style.css}">
   <title>Signup</title>
-  <style>
-    body {
-      font-family: Liberation Mono, serif;
-      background-color: #fffdd0;
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      height: 100vh;
-      margin: 0;
-      padding-top: 30px;
-    }
-
-    .signup-container {
-      text-align: center;
-      padding: 50px;
-      border-radius: 10px;
-      display: flex;
-      justify-content: center;
-      flex-direction: column;
-      align-items: center; /* This centers all content */
-      width: 100%;
-      max-width: 350px;
-    }
-
-    h1 {
-      font-family: Liberation Mono, serif;
-      font-size: 2rem;
-      margin-bottom: 20px;
-    }
-
-    .form-container {
-      width: 80%;
-    }
-
-    .input-box,
-    .button-box {
-      display: flex;
-      justify-content: center;
-      width: 100%;
-      margin: 10px 0;
-    }
-
-    .input-box input,
-    .signup-button {
-      width: 100%; /* Full width for inputs and buttons */
-      max-width: 350px; /* Constrain the width */
-      padding: 10px;
-      font-size: 1rem;
-      border: 2px solid black;
-      border-radius: 5px;
-      box-shadow: 3px 3px 0px #000;
-      text-align: center;
-    }
-
-    .signup-button {
-      background-color: #ff69b4;
-      color: white;
-    }
-
-    .signup-button:hover {
-      background-color: #ff1493;
-    }
-
-  </style>
 </head>
 <body>
-
+<div th:replace="topmenu :: topMenu"></div>
 <div class="signup-container">
   <h1>SIGNUP</h1>
   <div th:if="${errorMessage}" style="color: red;">

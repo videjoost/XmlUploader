@@ -17,5 +17,10 @@ public class AppController {
     return "drop";
   }
 
+  @GetMapping("/menu")
+  public String showMenuPage() {
+    return "menu";
+  }
+
 }
 
