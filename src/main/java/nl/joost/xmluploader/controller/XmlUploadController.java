@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 @Slf4j
 @Controller
@@ -27,18 +28,22 @@ public class XmlUploadController {
     this.xmlProcessingService = xmlProcessingService;
   }
 
-  @PostMapping(value = "/upload", produces = {MediaType.TEXT_PLAIN_VALUE})
-  @ResponseBody
-  public ResponseEntity<String> uploadXml(@RequestParam("file") MultipartFile file) {
-    log.info("File upload initiated: {} bytes", file.getSize());
-
+  @PostMapping(value = "/upload")
+  public String uploadXml(@RequestParam("file") MultipartFile file,
+      RedirectAttributes redirectAttributes) {
     try {
+      // Call the service to process the uploaded file
       xmlProcessingService.processXmlFile(file);
-      return new ResponseEntity<>("File uploaded and processed successfully.", HttpStatus.OK);
+      // Add a success message to be shown on the drop page
+      redirectAttributes.addFlashAttribute("message", "Upload successful!");
     } catch (Exception e) {
-      log.error("Error processing file: {}", e.getMessage(), e);
-      return new ResponseEntity<>("Error processing file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);
+      // Add an error message to be shown on the drop page
+      redirectAttributes.addFlashAttribute("message", "Error processing file: " + e.getMessage());
     }
+    // Redirect back to the "drop" page
+    return "redirect:/drop";
   }
+
+
 
 }
