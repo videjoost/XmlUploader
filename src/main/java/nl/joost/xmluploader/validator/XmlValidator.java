@@ -16,22 +16,12 @@ public class XmlValidator {
 
   public void validateXml(InputStream xmlInputStream, String xmlType) throws Exception {
     SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    StreamSource schemaFile = null;
-
-    switch (xmlType.toLowerCase()) {
-      case "book":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/schemas/book.xsd"));
-        break;
-      case "music":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/schemas/music.xsd"));
-        break;
-      case "movie":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/schemas/movie.xsd"));
-        break;
-      default:
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/schemas/catalog.xsd"));
-        break;
-    }
+    StreamSource schemaFile = switch (xmlType.toLowerCase()) {
+      case "book" -> new StreamSource(getClass().getResourceAsStream("/schemas/book.xsd"));
+      case "music" -> new StreamSource(getClass().getResourceAsStream("/schemas/music.xsd"));
+      case "movie" -> new StreamSource(getClass().getResourceAsStream("/schemas/movie.xsd"));
+      default -> new StreamSource(getClass().getResourceAsStream("/schemas/catalog.xsd"));
+    };
 
     if (schemaFile.getInputStream() == null) {
       throw new Exception("XSD file not found for type: " + xmlType);

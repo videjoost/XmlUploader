@@ -40,6 +40,8 @@ public class Movie {
   @Column(name = "description", nullable = false)
   private String description;
 
+
+
   public static class Builder {
     private String director;
     private String title;

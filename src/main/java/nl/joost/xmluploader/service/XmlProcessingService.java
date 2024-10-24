@@ -1,6 +1,7 @@
 package nl.joost.xmluploader.service;
 
 import java.io.BufferedInputStream;
+import java.io.ByteArrayInputStream;
 import java.io.InputStream;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -32,7 +33,7 @@ public class XmlProcessingService {
   }
 
   public void processXmlFile(MultipartFile file) throws Exception {
-    if (!file.getContentType().equals("text/xml") && !file.getContentType().equals("application/xml")) {
+    if (!"text/xml".equals(file.getContentType()) && !"application/xml".equals(file.getContentType())) {
       throw new Exception("Invalid file type.");
     }
 
@@ -41,36 +42,31 @@ public class XmlProcessingService {
       throw new Exception("Unsupported XML type detected.");
     }
 
-    try (InputStream inputStream = new BufferedInputStream(file.getInputStream())) {
-      inputStream.mark(Integer.MAX_VALUE);  // Mark the current position
-      xmlValidator.validateXml(inputStream, xmlType);  // Validate against the schema based on type
-      inputStream.reset();  // Reset back to the marked position
+    // Read the file's InputStream into a byte array so we can use it multiple times
+    byte[] xmlBytes = file.getBytes();
 
-      // Now process the XML
+    // Validate XML
+    try (InputStream inputStream = new ByteArrayInputStream(xmlBytes)) {
+      xmlValidator.validateXml(inputStream, xmlType);
+    }
+
+    // Process the XML
+    try (InputStream inputStream = new ByteArrayInputStream(xmlBytes)) {
       DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
       DocumentBuilder builder = factory.newDocumentBuilder();
       Document document = builder.parse(inputStream);
-
-      // Process entities based on the XML type
       processEntities(document, xmlType);
     }
   }
 
+
   private void processEntities(Document document, String xmlType) throws Exception {
-    String tagName;
-    switch (xmlType.toLowerCase()) {
-      case "book":
-        tagName = "book";
-        break;
-      case "music":
-        tagName = "album";
-        break;
-      case "movie":
-        tagName = "movie";
-        break;
-      default:
-        throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
-    }
+    String tagName = switch (xmlType.toLowerCase()) {
+      case "book" -> "book";
+      case "music" -> "album";
+      case "movie" -> "movie";
+      default -> throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
+    };
 
     XmlProcessor processor = XmlProcessorFactory.getProcessor(xmlType, bookRepo, musicRepo, movieRepo);
     NodeList nodeList = document.getElementsByTagName(tagName);
@@ -91,8 +87,11 @@ public class XmlProcessingService {
         return "music";
       } else if (fileName.contains("movie")) {
         return "movie";
+      } else if (fileName.contains("catalog")) {
+        return "catalog";  // Handle mixed types
       }
     }
     return "unknown";
   }
+
 }

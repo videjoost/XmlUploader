@@ -41,8 +41,4 @@ public class XmlUploadController {
     }
   }
 
-  @GetMapping("/success")
-  public String success(Model model) {
-    return "redirect:/objects";
-  }
 }
