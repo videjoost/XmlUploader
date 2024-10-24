@@ -12,24 +12,9 @@ import org.xml.sax.helpers.DefaultHandler;
 @Component
 public class XmlValidator {
 
-  public void validateXml(InputStream xml, String xmlType) throws Exception {
+  public void validateXml(InputStream xmlInputStream) throws Exception {
     SchemaFactory factory = SchemaFactory.newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-    StreamSource schemaFile;
-
-    switch (xmlType) {
-      case "book":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/book.xsd"));
-        break;
-      case "music":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/music.xsd"));
-        break;
-      case "movie":
-        schemaFile = new StreamSource(getClass().getResourceAsStream("/movie.xsd"));
-        break;
-      default:
-        throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
-    }
-
+    StreamSource schemaFile = new StreamSource(getClass().getResourceAsStream("/catalog.xsd"));  // Use the new schema
     javax.xml.validation.Validator validator = factory.newSchema(schemaFile).newValidator();
 
     validator.setErrorHandler(new DefaultHandler() {
@@ -50,9 +35,10 @@ public class XmlValidator {
     });
 
     try {
-      validator.validate(new StreamSource(xml));
+      validator.validate(new StreamSource(xmlInputStream));
     } catch (SAXException e) {
       throw new Exception("Invalid XML: " + e.getMessage());
     }
   }
 }
+

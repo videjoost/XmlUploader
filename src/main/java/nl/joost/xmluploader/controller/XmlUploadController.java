@@ -1,24 +1,19 @@
 package nl.joost.xmluploader.controller;
 
-import ch.qos.logback.core.model.Model;
 import lombok.extern.slf4j.Slf4j;
 import nl.joost.xmluploader.service.XmlProcessingService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
 @Slf4j
-// @Secured({"ROLE_USER"})
-@RequestMapping("/private/xml")
 @Controller
+@RequestMapping("/private/xml")
 public class XmlUploadController {
 
   private final XmlProcessingService xmlProcessingService;
@@ -28,20 +23,29 @@ public class XmlUploadController {
     this.xmlProcessingService = xmlProcessingService;
   }
 
-  @PostMapping(value = "/upload", produces = {MediaType.TEXT_PLAIN_VALUE})
-  @ResponseBody
-  public ResponseEntity<String> uploadXml(@RequestParam("file") MultipartFile file, @RequestParam("type") String xmlType) {
-    log.info("File upload initiated");
+  @PostMapping("/upload")
+  public String uploadXml(@RequestParam("file") MultipartFile file, Model model) {
+    log.info("File upload initiated: {} bytes", file.getSize());
+
+    if (file.getSize() == 0) {
+      model.addAttribute("errorMessage", "Uploaded file is empty.");
+      return "redirect:/drop";
+    }
+
     try {
-      xmlProcessingService.processXmlFile(file.getInputStream(), xmlType);
-      return new ResponseEntity<>("File uploaded and processed successfully.", HttpStatus.OK);
+      xmlProcessingService.processXmlFile(file);
+      model.addAttribute("successMessage", "File uploaded and processed successfully.");
+      return "redirect:/objects";
+
     } catch (Exception e) {
       log.error("Error processing file: {}", e.getMessage(), e);
-      return new ResponseEntity<>("Error processing file: " + e.getMessage(), HttpStatus.INTERNAL_SERVER_ERROR);}
+      model.addAttribute("errorMessage", "Error processing file: " + e.getMessage());
+      return "redirect:/drop";
+    }
   }
 
   @GetMapping("/success")
   public String success(Model model) {
-    return "redirect:/books";
+    return "redirect:/objects";
   }
 }

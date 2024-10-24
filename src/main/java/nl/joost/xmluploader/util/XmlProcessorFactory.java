@@ -11,14 +11,13 @@ import nl.joost.xmluploader.repo.MusicRepo;
 
 public class XmlProcessorFactory {
 
-  public static XmlProcessor getProcessor(String xmlType, BookRepo bookRepo, MusicRepo musicRepo, MovieRepo movieRepo) {
-    if ("book".equals(xmlType)) {
-      return new BookXmlProcessor(bookRepo);
-    } else if ("music".equals(xmlType)) {
-      return new MusicXmlProcessor(musicRepo);
-    } else if ("movie".equals(xmlType)) {
-      return new MovieXmlProcessor(movieRepo);
-    }
-    throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
+  public static XmlProcessor getProcessor(String xmlType, BookRepo bookRepo, MusicRepo musicRepo,
+      MovieRepo movieRepo) {
+    return switch (xmlType.toLowerCase()) {
+      case "book" -> new BookXmlProcessor(bookRepo);
+      case "music" -> new MusicXmlProcessor(musicRepo);
+      case "movie" -> new MovieXmlProcessor(movieRepo);
+      default -> throw new UnsupportedOperationException("Unsupported XML type: " + xmlType);
+    };
   }
 }

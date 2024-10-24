@@ -7,7 +7,7 @@
   <title>Signup</title>
 </head>
 <body>
-<div th:replace="topmenu :: topMenu"></div>
+<div th:replace="~{topmenu :: topMenu}"></div>
 <div class="signup-container">
   <h1>SIGNUP</h1>
   <div th:if="${errorMessage}" style="color: red;">
