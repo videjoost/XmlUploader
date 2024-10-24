@@ -1,0 +1,21 @@
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+  xmlns:book="book.xsd"
+  xmlns:music="music.xsd"
+  xmlns:movie="movie.xsd"
+  elementFormDefault="qualified">
+
+  <xs:import namespace="book.xsd" schemaLocation="book.xsd"/>
+  <xs:import namespace="music.xsd" schemaLocation="music.xsd"/>
+  <xs:import namespace="movie.xsd" schemaLocation="movie.xsd"/>
+
+  <xs:element name="catalog">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element ref="book:catalog" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="music:musicCatalog" minOccurs="0" maxOccurs="unbounded"/>
+        <xs:element ref="movie:movieCatalog" minOccurs="0" maxOccurs="unbounded"/>
+      </xs:sequence>
+    </xs:complexType>
+  </xs:element>
+
+</xs:schema>
