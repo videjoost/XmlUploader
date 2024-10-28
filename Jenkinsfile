@@ -28,7 +28,8 @@ pipeline {
 
         stage('Deploy to Test Server') {
             steps {
-                // Here you can add commands or scripts to deploy to a test server
+                // Add commands to deploy to a test server here
+                echo 'Deploying to Test Server'
             }
         }
     }
