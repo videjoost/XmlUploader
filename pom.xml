@@ -11,7 +11,7 @@
 
   <properties>
     <!-- Define the Spring version here -->
-    <spring.version>6.1.12</spring.version>
+    <spring.version>6.1.13</spring.version>
     <spring-boot.version>3.3.3</spring-boot.version>
 
 
@@ -21,6 +21,13 @@
   </properties>
 
   <dependencies>
+
+    <dependency>
+      <groupId>ch.qos.logback</groupId>
+      <artifactId>logback-classic</artifactId>
+      <version>1.2.11</version>
+    </dependency>
+
 
     <!-- Spring Core -->
     <dependency>
@@ -72,7 +79,7 @@
     <dependency>
       <groupId>org.springframework</groupId>
       <artifactId>spring-orm</artifactId>
-      <version>${spring.version}</version>
+      <version>6.1.12</version>
     </dependency>
 
     <dependency>
